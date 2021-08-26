@@ -1,0 +1,29 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: {{ .Values.name }}
+spec:
+  version: 7.14.0
+  nodeSets:
+  - name: default
+    count: {{ .Values.count }}
+    podTemplate:
+      spec:
+        containers:
+        - name: elasticsearch
+          env:
+          - name: ES_JAVA_OPTS
+            value: {{ .Values.esJavaOpts }}
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+    config:
+      node.store.allow_mmap: false
+      http.cors.enabled: true
+      http.cors.allow-origin: '*'
+      http.cors.allow-credentials: true      
+      xpack.security.http.ssl.enabled: false
+      http.cors.allow-headers: 'Authorization,X-Requested-With,Content-Type,Content-Length'

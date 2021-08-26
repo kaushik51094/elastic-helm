@@ -1,0 +1,21 @@
+---
+name: 'elastic'
+count: 1
+version: 3
+antiAffinity: "soft"
+
+esJavaOpts: "-Xmx128m -Xms128m"
+
+esConfig:
+  elasticsearchyml: |
+    http.cors.enabled: true
+    http.cors.allow-origin: '*'
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512M"
+  limits:
+    cpu: "1000m"
+    memory: "512M"
+
